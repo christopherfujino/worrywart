@@ -20,7 +20,13 @@ $(function () {
     el: '#button-interface',
     data: {
       stressors: stressors,
-      intensity: intensity
     }
   });
+
+  var stressLevel = new Vue({
+    el: '#stress-level',
+    data: {
+      intensity: intensity
+    }
+  })
 })
