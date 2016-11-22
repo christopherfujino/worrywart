@@ -1,0 +1,93 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <!--
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+    -->
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <!--[if lte IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+    <![endif]-->
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand">Don't Worry</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="menu-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Edit Categories</a></li>
+            <li><a href="#">Stats</a></li>
+            <li><a href="#">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <h2>What's gettin ya down?</h2>
+      <div class="btn-group-vertical btn-block" id="button-interface">
+        <button type="button" class="btn btn-default btn-lg" v-for="stressor in stressors">{{ stressor }}</button>
+        <button type="button" class="btn btn-default btn-lg">
+          Misc.
+        </button>
+        <button type="button" class="btn btn-default btn-lg">
+          Add new stressor...
+        </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="stress-level" class="container-fluid">
+      <div class='list-group'>
+        <a href="#" class="list-group-item" v-for="i in intensity">{{ i.intensity }}<span v-if="i.description">&nbsp;- {{ i.description }}</span></a>
+        <!--
+        <a href="#" class="list-group-item">10: Complete Breakdown</a>
+        <a href="#" class="list-group-item">9: Complete Breakdown</a>
+        <a href="#" class="list-group-item">8: Complete Breakdown</a>
+        <a href="#" class="list-group-item">7: Complete Breakdown</a>
+        <a href="#" class="list-group-item">6: Complete Breakdown</a>
+        <a href="#" class="list-group-item">5: Complete Breakdown</a>
+        <a href="#" class="list-group-item">4: Complete Breakdown</a>
+        <a href="#" class="list-group-item">3: Complete Breakdown</a>
+        <a href="#" class="list-group-item">2: Complete Breakdown</a>
+        <a href="#" class="list-group-item">1: Complete Breakdown</a>
+        -->
+      </div>
+    </div>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/vue/dist/vue.min.js"></script>
+    <script src="node_modules/pouchdb/dist/pouchdb.min.js"></script>
+    <script src="Incident.js"></script>
+    <script src="main.js"></script>
+
+    <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+<!--
+    <script>
+        window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+        ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+    -->
+  </body>
+</html>
