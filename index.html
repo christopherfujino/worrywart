@@ -29,29 +29,94 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#" v-on:click="router('#button-interface')">Don't Worry</a>
+          <a class="navbar-brand" href="#" v-on:click="router('#button-interface')">{{ title }}</a>
         </div>
 
         <div class="collapse navbar-collapse" id="menu-collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#" v-on:click="navRouter('#stats', $event)">Stats</a></li>
-            <li><a href="#" v-on:click="navRouter('#settings', $event)">Settings</a></li>
-            <li><a href="#" v-on:click="navRouter('#about', $event)">About</a></li>
+            <li>
+              <a href="#" data-toggle="modal" data-target="#stats">
+                Stats
+              </a>
+            </li>
+            <li>
+              <a href="#" data-toggle="modal" data-target="#settings">
+                Settings
+              </a>
+            </li>
+            <li>
+              <a href="#" data-toggle="modal" data-target="#about-modal">
+                About
+              </a>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <div id="stats" class="container-fluid hidden view">
-      <h2 class='text-center'>Statistics</h2>
+    <div id="stats" class="modal fade" tabindex='-1' role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="save"><span>&times;</span></button>
+            <h2>Statistics</h2>
+          </div>
+          <div class="modal-body">
+            <table class="table">
+              <tr>
+                <td>Option 1</td>
+                <td>Value 1, Value 2</td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div id="settings" class="container-fluid hidden view">
-      <h2 class='text-center'>Settings</h2>
+    <div id="settings" class="modal fade" tabindex='-1' role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="save"><span>&times;</span></button>
+            <h2>Settings</h2>
+          </div>
+          <div class="modal-body">
+            <table class="table">
+              <tr>
+                <td>Option 1</td>
+                <td>Value 1, Value 2</td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div id="about" class="container-fluid hidden view">
-      <h2 class='text-center'>About Worrywart!</h2>
+    <div id="about-modal" class="modal fade" tabindex='-1' role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="save"><span>&times;</span></button>
+            <h2>About</h2>
+          </div>
+          <div class="modal-body">
+            <p>
+            You are using {{ title }} version {{ version }}, written by <a href="https://twitter.com/chrisfujino">Christopher Fujino.</a>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Okay</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="text-center" id="incident-interface">

@@ -1,5 +1,8 @@
 $(function () {
-  //interface();
+  var app = {
+    title: "Worrywart",
+    version: [0, 1, 0]
+  };
 
   var stressors = [
     'The economy',
@@ -52,6 +55,10 @@ $(function () {
 
   var navInterface = new Vue({
     el: '#nav-interface',
+    data: {
+      title: app.title,
+      version: '' + app.version[0] + '.' + app.version[1] + '.' + app.version[2]
+    },
     methods: {
       navRouter: function (target, e) {
         $('#menu-collapse li').removeClass('active');
@@ -79,29 +86,12 @@ $(function () {
       }
     }
   });
-/*
-  var stressLevel = new Vue({
-    el: '#stress-level',
-    data: {
-      intensity: intensity
-    },
-    methods: {
-      thisRouter: function (e) {
-        thisIncident.intensity = parseInt(e.srcElement.innerText, 10)
-        router('#result');
-        console.log({thisIncident});
-      }
-    }
-  });
 
-  var result = new Vue({
-    el: '#result',
+  var aboutModal = new Vue({
+    el: '#about-modal',
     data: {
-      incident: thisIncident
-    },
-    methods: {
-      type: function () { return thisIncident.type; }
+      title: app.title,
+      version: '' + app.version[0] + '.' + app.version[1] + '.' + app.version[2]
     }
-  });
-  */
+  })
 });
