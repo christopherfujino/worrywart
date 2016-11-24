@@ -63,8 +63,12 @@
           </div>
           <div class="modal-body">
             <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation"><a href="#stats-log" data-toggle="tab">Log</a></li>
-              <li role="presentation"><a href="#stats-tags" data-toggle="tab">Tags</a></li>
+              <li role="presentation">
+                <a href="#stats-log" data-toggle="tab">Log</a>
+              </li>
+              <li role="presentation">
+                <a href="#stats-tags" data-toggle="tab">Tags</a>
+              </li>
             </ul>
 
             <div class="tab-content">
@@ -83,9 +87,7 @@
                 </table>
               </div>
               <div role="tabpanel" class="tab-pane fade active" id="stats-tags">
-                <div>
-                  Taggy stuffsorz
-                </div>
+                Taggy stuffsorz
               </div>
             </div>
           </div>
@@ -168,7 +170,9 @@
 
       <div id="result" class="container-fluid view hidden">
         <h2>Okay!</h2>
-        <div v-for="(value, key) in incident">{{ key }}: {{ value }}&nbsp;</div>
+        <p>
+          You are worrying about {{ incident.type }} at level {{ incident.intensity }} at {{ incident.date }}.
+        </p>
         <button type="button" class="btn btn-primary" v-on:click="log">Log</button>
         <button type="button" class="btn btn-default" v-on:click="cancel">Cancel</button>
       </div>
@@ -179,6 +183,7 @@
     <script src="dependencies/bootstrap.min.js"></script>
     <script src="dependencies/vue.min.js"></script>
     <script src="dependencies/pouchdb.min.js"></script>
+    <script src="dependencies/moment.min.js"></script>
     <script src="router.js"></script>
     <script src="Incident.js"></script>
     <script src="main.js"></script>

@@ -1,3 +1,7 @@
 #nav-interface > div.container-fluid * {
   transition: background-color 0.75s, color 0.675s;
 }
+
+.modal table {
+  margin-bottom: 0px;
+}
