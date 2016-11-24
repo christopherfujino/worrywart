@@ -12,26 +12,6 @@ $(function () {
 
   var intensityArr = [
     {
-      intensity: 10,
-      description: 'Complete Meltdown'
-    },
-    {
-      intensity: 9,
-      description: null
-    },
-    {
-      intensity: 8,
-      description: null
-    },
-    {
-      intensity: 7,
-      description: null
-    },
-    {
-      intensity: 6,
-      description: null
-    },
-    {
       intensity: 5,
       description: null
     },
@@ -53,6 +33,8 @@ $(function () {
     }
   ];
 
+  var incidents = [];
+
   var navInterface = new Vue({
     el: '#nav-interface',
     data: {
@@ -73,16 +55,58 @@ $(function () {
     data: {
       stressors: stressors,
       intensity: intensityArr,
-      incident: { type: '', intensity: '' }
+      incident: { type: '', intensity: '', date: null }
     },
     methods: {
       buttonRouter: function (e) {
+        this.incident.date = new Date();
         this.incident.type = e.srcElement.innerText;
         router('#stress-level');
       },
       intensityRouter: function (e) {
         this.incident.intensity = parseInt(e.srcElement.innerText, 10);
         router('#result');
+      },
+      cancel: function (e) {
+        this.incident.type = '';
+        this.incident.intensity = '';
+        this.incident.date = null;
+        router('#button-interface');
+      },
+      log: function (e) {
+        incidents.push($.extend({}, this.incident));// shallow clone
+        this.incident.type = '';
+        this.incident.intensity = '';
+        this.incident.date = null;
+        router('#button-interface');
+      }
+    }
+  });
+
+  var statsModal = new Vue({
+    el: '#stats-modal',
+    data: {
+      incidents: incidents
+    },
+    methods: {
+      hours: function (i) {
+        var x = i.date.getHours();
+        if (x < 10) x = '0' + x;
+        return '' + x;
+      },
+      minutes: function (i) {
+        var x = i.date.getMinutes();
+        if (x < 10) x = '0' + x;
+        return '' + x;
+      }
+    }
+  });
+
+  var settingsModal = new Vue({
+    el: '#settings-modal',
+    methods: {
+      save: function (e) {
+        $('#settings-modal').modal('hide');
       }
     }
   });

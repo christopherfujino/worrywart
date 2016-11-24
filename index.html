@@ -35,12 +35,12 @@
         <div class="collapse navbar-collapse" id="menu-collapse">
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="#" data-toggle="modal" data-target="#stats">
+              <a href="#" data-toggle="modal" data-target="#stats-modal">
                 Stats
               </a>
             </li>
             <li>
-              <a href="#" data-toggle="modal" data-target="#settings">
+              <a href="#" data-toggle="modal" data-target="#settings-modal">
                 Settings
               </a>
             </li>
@@ -54,7 +54,7 @@
       </div>
     </nav>
 
-    <div id="stats" class="modal fade" tabindex='-1' role="dialog">
+    <div id="stats-modal" class="modal fade" tabindex='-1' role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -62,22 +62,41 @@
             <h2>Statistics</h2>
           </div>
           <div class="modal-body">
-            <table class="table">
-              <tr>
-                <td>Option 1</td>
-                <td>Value 1, Value 2</td>
-              </tr>
-            </table>
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation"><a href="#stats-log" data-toggle="tab">Log</a></li>
+              <li role="presentation"><a href="#stats-tags" data-toggle="tab">Tags</a></li>
+            </ul>
+
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="stats-log">
+                <table class="table">
+                  <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Intensity</th>
+                  </tr>
+                  <tr v-for="i in incidents">
+                    <td>{{ i.date.getMonth() + 1 }}/{{ i.date.getDate() }}/{{ i.date.getFullYear() }} {{ hours(i) }}:{{ minutes(i) }}</td>
+                    <td>{{ i.type }}</td>
+                    <td>{{ i.intensity }}</td>
+                  </tr>
+                </table>
+              </div>
+              <div role="tabpanel" class="tab-pane fade active" id="stats-tags">
+                <div>
+                  Taggy stuffsorz
+                </div>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Okay</button>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="settings" class="modal fade" tabindex='-1' role="dialog">
+    <div id="settings-modal" class="modal fade" tabindex='-1' role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -93,7 +112,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-primary" v-on:click="save">Save</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           </div>
         </div>
@@ -138,12 +157,11 @@
 
       <div id="stress-level" class="container-fluid view hidden">
         <h2>How intense is it?</h2>
-        <div class='list-group'>
-          <a href="#" class="list-group-item"
-            v-on:click="intensityRouter"
-            v-for="i in intensity">
+        <div class='btn-group-vertical btn-block'>
+          <button type="button" class="btn btn-default btn-lg"
+            v-for="i in intensity"
+            v-on:click="intensityRouter">
             {{ i.intensity }}
-            <span v-if="i.description">- {{ i.description }}</span>
           </a>
         </div>
       </div>
@@ -151,7 +169,8 @@
       <div id="result" class="container-fluid view hidden">
         <h2>Okay!</h2>
         <div v-for="(value, key) in incident">{{ key }}: {{ value }}&nbsp;</div>
-        <button type="button" class="btn btn-default" v-on:click="">Okay!</button>
+        <button type="button" class="btn btn-primary" v-on:click="log">Log</button>
+        <button type="button" class="btn btn-default" v-on:click="cancel">Cancel</button>
       </div>
 
     </div>
