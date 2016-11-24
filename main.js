@@ -1,11 +1,13 @@
 $(function () {
+  //interface();
+
   var stressors = [
     'The economy',
     'Politics',
     'Dramaz'
   ];
 
-  var intensity = [
+  var intensityArr = [
     {
       intensity: 10,
       description: 'Complete Meltdown'
@@ -48,17 +50,58 @@ $(function () {
     }
   ];
 
-  var buttonInterface = new Vue({
-    el: '#button-interface',
+  var navInterface = new Vue({
+    el: '#nav-interface',
+    methods: {
+      navRouter: function (target, e) {
+        $('#menu-collapse li').removeClass('active');
+        $(e.srcElement).parent().addClass('active');
+        router(target);
+      }
+    }
+  })
+
+  var incidentInterface = new Vue({
+    el: '#incident-interface',
     data: {
       stressors: stressors,
+      intensity: intensityArr,
+      incident: { type: '', intensity: '' }
+    },
+    methods: {
+      buttonRouter: function (e) {
+        this.incident.type = e.srcElement.innerText;
+        router('#stress-level');
+      },
+      intensityRouter: function (e) {
+        this.incident.intensity = parseInt(e.srcElement.innerText, 10);
+        router('#result');
+      }
     }
   });
-
+/*
   var stressLevel = new Vue({
     el: '#stress-level',
     data: {
       intensity: intensity
+    },
+    methods: {
+      thisRouter: function (e) {
+        thisIncident.intensity = parseInt(e.srcElement.innerText, 10)
+        router('#result');
+        console.log({thisIncident});
+      }
     }
-  })
-})
+  });
+
+  var result = new Vue({
+    el: '#result',
+    data: {
+      incident: thisIncident
+    },
+    methods: {
+      type: function () { return thisIncident.type; }
+    }
+  });
+  */
+});

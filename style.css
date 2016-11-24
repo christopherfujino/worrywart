@@ -1,0 +1,3 @@
+#nav-interface > div.container-fluid * {
+  transition: background-color 0.75s, color 0.675s;
+}
