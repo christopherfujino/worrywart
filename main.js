@@ -98,6 +98,10 @@ $(function () {
         var x = i.date.getMinutes();
         if (x < 10) x = '0' + x;
         return '' + x;
+      },
+      okay: function () {
+        $('#stats-modal .modal-body .nav-tabs a:first').tab('show');
+        $('#stats-modal').modal('hide');
       }
     }
   });
