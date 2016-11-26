@@ -1,8 +1,10 @@
 $(function () {
   var app = {
-    title: "Worrywart",
+    title: 'Worrywart',
     version: [0, 1, 0]
   };
+
+  //var db = new PouchDB('worrywart');
 
   var stressors = [];
 
@@ -44,7 +46,7 @@ $(function () {
         router(target);
       }
     }
-  })
+  });
 
   var incidentInterface = new Vue({
     el: '#incident-interface',
