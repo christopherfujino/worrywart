@@ -4,11 +4,7 @@ $(function () {
     version: [0, 1, 0]
   };
 
-  var stressors = [
-    'The economy',
-    'Politics',
-    'Dramaz'
-  ];
+  var stressors = [];
 
   var intensityArr = [
     {
@@ -55,12 +51,13 @@ $(function () {
     data: {
       stressors: stressors,
       intensity: intensityArr,
+      newStressor: '',
       incident: { type: '', intensity: '', date: null }
     },
     methods: {
-      buttonRouter: function (e) {
+      buttonRouter: function (stressor) {
         this.incident.date = new Date();
-        this.incident.type = e.srcElement.innerText;
+        this.incident.type = stressor;
         router('#stress-level');
       },
       intensityRouter: function (e) {
@@ -79,6 +76,10 @@ $(function () {
         this.incident.intensity = '';
         this.incident.date = null;
         router('#button-interface');
+      },
+      addNewStressor: function () {
+        this.stressors.push(this.newStressor);
+        this.newStressor = '';
       }
     }
   });

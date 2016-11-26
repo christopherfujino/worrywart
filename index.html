@@ -143,19 +143,22 @@
     </div>
 
     <div class="text-center" id="incident-interface">
-      
+
       <div class="container-fluid view" id="button-interface">
         <h2>What's gettin ya down?</h2>
         <div class="btn-group-vertical btn-block">
           <button type="button" class="btn btn-default btn-lg"
-            v-on:click="buttonRouter"
-            v-for="stressor in stressors">{{ stressor }}</button>
-          <button type="button" class="btn btn-default btn-lg">
+            v-for="stressor in stressors"
+            v-on:click="buttonRouter(stressor)">{{ stressor }}</button>
+          <button type="button" class="btn btn-default btn-lg" v-on:click="buttonRouter('misc')">
             Misc.
           </button>
-          <button type="button" class="btn btn-default btn-lg">
-            Add new stressor...
-          </button>
+          <div class="input-group">
+            <input type="text" class="form-control" v-model="newStressor" placeholder="New Stress Type">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button" v-on:click="addNewStressor">Add New</button>
+            </span>
+          </div>
         </div>
       </div>
 
