@@ -1,10 +1,20 @@
 $(function () {
-  var app = {
+  var templateState = {
     title: 'Worrywart',
     version: [0, 1, 0]
   };
 
-  //var db = new PouchDB('worrywart');
+  var db = new PouchDB('worrywart');
+  var state = db.get('state').catch(function (err) {
+    if (err.name === 'not_found') {
+      console.log('no stored db found, creating new.');
+      return templateState;
+    } else throw err;
+  }).then(function (state) {
+    return state;
+  }).catch(function (err) {
+    throw err;
+  });
 
   var stressors = [];
 
@@ -36,8 +46,8 @@ $(function () {
   var navInterface = new Vue({
     el: '#nav-interface',
     data: {
-      title: app.title,
-      version: '' + app.version[0] + '.' + app.version[1] + '.' + app.version[2]
+      title: state.title,
+      version: '' + state.version[0] + '.' + state.version[1] + '.' + state.version[2]
     },
     methods: {
       navRouter: function (target, e) {
@@ -121,8 +131,8 @@ $(function () {
   var aboutModal = new Vue({
     el: '#about-modal',
     data: {
-      title: app.title,
-      version: '' + app.version[0] + '.' + app.version[1] + '.' + app.version[2]
+      title: state.title,
+      version: '' + state.version[0] + '.' + state.version[1] + '.' + state.version[2]
     }
   })
 });
