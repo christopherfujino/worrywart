@@ -191,8 +191,10 @@
         <p>
           You are worrying about {{ incident.type }} at level {{ incident.intensity }} at {{ incident.localeString }}.
         </p>
-        <button type="button" class="btn btn-primary" v-on:click="log">Log</button>
-        <button type="button" class="btn btn-default" v-on:click="cancel">Cancel</button>
+        <div class="btn-group btn-group-lg">
+          <button type="button" class="btn btn-primary" v-on:click="log">Log</button>
+          <button type="button" class="btn btn-default" v-on:click="cancel">Cancel</button>
+        </div>
       </div>
 
     </div>
