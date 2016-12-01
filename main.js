@@ -3,7 +3,7 @@ function Worrywart () {
   this.title = 'Worrywart';
   this.dbName = 'worrywart';
   this.documentName = 'state';
-  this.version = [0, 2, 0];
+  this.version = [0, 3, 0];
   this.stressors = [];
   this.incidents = [];
 }
