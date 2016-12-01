@@ -102,7 +102,12 @@ db.get(templateState.documentName).catch(function (err) {
       stressors: state.stressors,
       intensity: intensityArr,
       newStressor: '',
-      incident: { type: '', intensity: '', date: null, localeString: '' }
+      incident: {
+        type: '',
+        intensity: '',
+        date: null,
+        localeString: '',
+        description: '' }
     },
     methods: {
       buttonRouter: function (stressor) {
@@ -120,6 +125,8 @@ db.get(templateState.documentName).catch(function (err) {
         this.incident.type = '';
         this.incident.intensity = '';
         this.incident.date = null;
+        this.incident.localeString = '';
+        this.incident.description = '';
         router('#button-interface');
       },
       log: function (e) {
@@ -127,6 +134,8 @@ db.get(templateState.documentName).catch(function (err) {
         this.incident.type = '';
         this.incident.intensity = '';
         this.incident.date = null;
+        this.incident.localeString = '';
+        this.incident.description = '';
         db.put(state)
           .then(function (response) {
             state._rev = response.rev;

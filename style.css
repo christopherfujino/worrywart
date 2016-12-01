@@ -5,3 +5,7 @@
 .modal table {
   margin-bottom: 0px;
 }
+
+#stats-modal td.description {
+  word-break: break-all;
+}

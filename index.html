@@ -84,11 +84,13 @@
                     <th>Date</th>
                     <th>Type</th>
                     <th>Intensity</th>
+                    <th>Description</th>
                   </tr>
                   <tr v-for="i in incidents">
                     <td>{{ i.localeString }}</td>
                     <td>{{ i.type }}</td>
                     <td>{{ i.intensity }}</td>
+                    <td class="description">{{ i.description }}</td>
                   </tr>
                 </table>
               </div>
@@ -186,6 +188,9 @@
         <p>
           You are worrying about {{ incident.type }} at level {{ incident.intensity }} at {{ incident.localeString }}.
         </p>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Optional brief description, up to 140 characters" maxlength="140" v-model="incident.description">
+        </div>
         <div class="btn-group btn-group-lg">
           <button type="button" class="btn btn-primary" v-on:click="log">Log</button>
           <button type="button" class="btn btn-default" v-on:click="cancel">Cancel</button>
