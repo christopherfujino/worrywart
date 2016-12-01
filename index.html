@@ -29,11 +29,22 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#" v-on:click="router('#button-interface')">{{ title }}</a>
+          <a class="navbar-brand" href="#"
+            v-on:click="router('#button-interface')">{{ title }}</a>
         </div>
 
         <div class="collapse navbar-collapse" id="menu-collapse">
           <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="#" v-on:click="save">
+                Save
+              </a>
+            </li>
+            <li>
+              <a href="#" v-on:click="deleteDatabase">
+                Delete
+              </a>
+            </li>
             <li>
               <a href="#" data-toggle="modal" data-target="#stats-modal">
                 Stats
@@ -80,7 +91,7 @@
                     <th>Intensity</th>
                   </tr>
                   <tr v-for="i in incidents">
-                    <td>{{ i.date.getMonth() + 1 }}/{{ i.date.getDate() }}/{{ i.date.getFullYear() }} {{ hours(i) }}:{{ minutes(i) }}</td>
+                    <td>{{ i.localeString }}</td>
                     <td>{{ i.type }}</td>
                     <td>{{ i.intensity }}</td>
                   </tr>
@@ -153,8 +164,10 @@
           <button type="button" class="btn btn-default btn-lg" v-on:click="buttonRouter('misc')">
             Misc.
           </button>
-          <div class="input-group">
-            <input type="text" class="form-control" v-model="newStressor" placeholder="New Stress Type">
+          <div class="input-group input-group-lg">
+            <input type="text" class="form-control"
+              v-model="newStressor"
+              placeholder="New Stress Type">
             <span class="input-group-btn">
               <button class="btn btn-default" type="button" v-on:click="addNewStressor">Add New</button>
             </span>
@@ -176,7 +189,7 @@
       <div id="result" class="container-fluid view hidden">
         <h2>Okay!</h2>
         <p>
-          You are worrying about {{ incident.type }} at level {{ incident.intensity }} at {{ incident.date }}.
+          You are worrying about {{ incident.type }} at level {{ incident.intensity }} at {{ incident.localeString }}.
         </p>
         <button type="button" class="btn btn-primary" v-on:click="log">Log</button>
         <button type="button" class="btn btn-default" v-on:click="cancel">Cancel</button>

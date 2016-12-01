@@ -1,22 +1,26 @@
-$(function () {
-  var templateState = {
-    title: 'Worrywart',
-    version: [0, 1, 0]
-  };
+function Worrywart () {
+  this._id = 'state';
+  this.title = 'Worrywart';
+  this.dbName = 'worrywart';
+  this.documentName = 'state';
+  this.version = [0, 1, 0];
+  this.stressors = [];
+  this.incidents = [];
+}
 
-  var db = new PouchDB('worrywart');
-  var state = db.get('state').catch(function (err) {
-    if (err.name === 'not_found') {
-      console.log('no stored db found, creating new.');
-      return templateState;
-    } else throw err;
-  }).then(function (state) {
-    return state;
-  }).catch(function (err) {
-    throw err;
-  });
+var templateState = new Worrywart();
 
-  var stressors = [];
+var db = new PouchDB(templateState.dbName);
+
+db.get(templateState.documentName).catch(function (err) {
+  if (err.name === 'not_found') {
+    console.log('no stored db found, creating new.');
+    return templateState;
+  } else throw err;
+}).then(function (state) {
+  'use strict';
+
+  if(state._rev) console.log('Loaded _rev ' + state._rev);
 
   var intensityArr = [
     {
@@ -41,8 +45,6 @@ $(function () {
     }
   ];
 
-  var incidents = [];
-
   var navInterface = new Vue({
     el: '#nav-interface',
     data: {
@@ -50,6 +52,26 @@ $(function () {
       version: '' + state.version[0] + '.' + state.version[1] + '.' + state.version[2]
     },
     methods: {
+      save: function () {
+        db.put(state)
+          .then(function (response) {
+            state._rev = response.rev;
+            console.log('saved state. new _rev is: ' + state._rev);
+          }).catch(function (err) { throw err; });
+      },
+      deleteDatabase: function () {
+        if (state._rev) {
+          console.log('current _rev: ' + state._rev);
+          db.remove(state)
+            .then(function () {
+              console.log('deleted state.');
+              state = new Worrywart();
+              console.log('created new state.');
+            }).catch(function (err) { throw err; });
+        } else {
+          console.error('State has no _rev property.');
+        }
+      },
       navRouter: function (target, e) {
         $('#menu-collapse li').removeClass('active');
         $(e.srcElement).parent().addClass('active');
@@ -61,14 +83,16 @@ $(function () {
   var incidentInterface = new Vue({
     el: '#incident-interface',
     data: {
-      stressors: stressors,
+      stressors: state.stressors,
       intensity: intensityArr,
       newStressor: '',
-      incident: { type: '', intensity: '', date: null }
+      incident: { type: '', intensity: '', date: null, localeString: '' }
     },
     methods: {
       buttonRouter: function (stressor) {
-        this.incident.date = new Date();
+        var date = new Date();
+        this.incident.date = date.getTime();
+        this.incident.localeString = date.toLocaleString();
         this.incident.type = stressor;
         router('#stress-level');
       },
@@ -83,7 +107,7 @@ $(function () {
         router('#button-interface');
       },
       log: function (e) {
-        incidents.push($.extend({}, this.incident));// shallow clone
+        state.incidents.push($.extend({}, this.incident));// shallow clone
         this.incident.type = '';
         this.incident.intensity = '';
         this.incident.date = null;
@@ -99,18 +123,29 @@ $(function () {
   var statsModal = new Vue({
     el: '#stats-modal',
     data: {
-      incidents: incidents
+      incidents: state.incidents
     },
     methods: {
       hours: function (i) {
-        var x = i.date.getHours();
+        var x = new Date(i.date).getHours();
         if (x < 10) x = '0' + x;
-        return '' + x;
+        else x += '';
+        return x;
       },
       minutes: function (i) {
-        var x = i.date.getMinutes();
+        var x = new Date(i.date).getMinutes();
         if (x < 10) x = '0' + x;
-        return '' + x;
+        else x += '';
+        return x;
+      },
+      month: function (i) {
+        return new Date(i.date).getMonth() + 1;
+      },
+      date: function (i) {
+        return new Date(i.date).getDate();
+      },
+      year: function (i) {
+        return new Date(i.date).getFullYear();
       },
       okay: function () {
         $('#stats-modal .modal-body .nav-tabs a:first').tab('show');
@@ -134,5 +169,8 @@ $(function () {
       title: state.title,
       version: '' + state.version[0] + '.' + state.version[1] + '.' + state.version[2]
     }
-  })
+  });
+
+}).catch(function (err) {
+  throw err;
 });
