@@ -3,7 +3,7 @@ function Worrywart () {
   this.title = 'Worrywart';
   this.dbName = 'worrywart';
   this.documentName = 'state';
-  this.version = [0, 1, 0];
+  this.version = [0, 2, 0];
   this.stressors = [];
   this.incidents = [];
 }
@@ -12,6 +12,16 @@ var templateState = new Worrywart();
 
 var db = new PouchDB(templateState.dbName);
 
+function compareVersion (first, second, failCallback) {
+  for (var i = 0; i<3; i++) {
+    if (first[i] !== second[i]) {
+      if (first[i] > second[i]) return failCallback(1);
+      else return failCallback(-1);
+    }
+  }
+  return true;
+}
+
 db.get(templateState.documentName).catch(function (err) {
   if (err.name === 'not_found') {
     console.log('no stored db found, creating new.');
@@ -19,6 +29,12 @@ db.get(templateState.documentName).catch(function (err) {
   } else throw err;
 }).then(function (state) {
   'use strict';
+
+  compareVersion(new Worrywart().version, state.version, function (diff) {
+    state.version = new Worrywart().version;
+    console.log('changed state version to ' + state.version);
+    // should save here
+  });
 
   if(state._rev) console.log('Loaded _rev ' + state._rev);
 
