@@ -68,14 +68,14 @@ db.get(templateState.documentName).catch(function (err) {
       version: '' + state.version[0] + '.' + state.version[1] + '.' + state.version[2]
     },
     methods: {
-      save: function () {
+      save: function () { // deprecated
         db.put(state)
           .then(function (response) {
             state._rev = response.rev;
             console.log('saved state. new _rev is: ' + state._rev);
           }).catch(function (err) { throw err; });
       },
-      deleteDatabase: function () {
+      reset: function () {
         if (state._rev) {
           console.log('current _rev: ' + state._rev);
           db.remove(state)
@@ -127,6 +127,11 @@ db.get(templateState.documentName).catch(function (err) {
         this.incident.type = '';
         this.incident.intensity = '';
         this.incident.date = null;
+        db.put(state)
+          .then(function (response) {
+            state._rev = response.rev;
+            console.log('saved state. new _rev is: ' + state._rev);
+          }).catch(function (err) { throw err; });
         router('#button-interface');
       },
       addNewStressor: function () {
