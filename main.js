@@ -184,11 +184,11 @@ db.get(templateState.documentName).catch(function (err) {
     }
   });
 
-  var settingsModal = new Vue({
-    el: '#settings-modal',
+  var preferencesModal = new Vue({
+    el: '#preferences-modal',
     methods: {
       save: function (e) {
-        $('#settings-modal').modal('hide');
+        $('#preferences-modal').modal('hide');
       }
     }
   });
