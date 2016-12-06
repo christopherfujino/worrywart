@@ -4,7 +4,7 @@ function Worrywart () {
   this.dbName = 'worrywart';
   this.documentName = 'state';
   this.version = [0, 3, 0];
-  this.stressors = [];
+  this.stressors = ['misc'];
   this.incidents = [];
 }
 
